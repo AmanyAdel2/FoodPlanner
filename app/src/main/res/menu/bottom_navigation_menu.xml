@@ -1,0 +1,47 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/home"
+        android:enabled="true"
+        android:title="@string/home"
+        android:icon="@drawable/baseline_home_24"
+        app:itemIconTint = "@color/mainColor"
+        app:itemTextColor = "@color/mainColor"
+        app:labelVisibilityMode = "selected"
+        />
+    <item
+        android:id="@+id/search"
+        android:enabled="true"
+        android:icon="@drawable/search"
+        android:title="@string/search"
+        app:itemIconTint = "@color/mainColor"
+        app:itemTextColor = "@color/mainColor"
+        app:labelVisibilityMode = "selected"/>
+
+    <item
+        android:id="@+id/plan"
+        android:enabled="true"
+        android:icon="@drawable/calendar"
+        android:title="@string/plan"
+        app:itemIconTint = "@color/mainColor"
+        app:itemTextColor = "@color/mainColor"
+        app:labelVisibilityMode = "selected"/>
+
+    <item
+        android:id="@+id/favorite"
+        android:enabled="true"
+        android:icon="@drawable/favorite"
+        android:title="@string/favorite"
+        app:itemIconTint = "@color/mainColor"
+        app:itemTextColor = "@color/mainColor"
+        app:labelVisibilityMode = "selected"/>
+
+    <item
+        android:id="@+id/account"
+        android:enabled="true"
+        android:icon="@drawable/account"
+        android:title="@string/account"
+        app:itemIconTint = "@color/mainColor"
+        app:itemTextColor = "@color/mainColor"
+        app:labelVisibilityMode = "selected"/>
+</menu>

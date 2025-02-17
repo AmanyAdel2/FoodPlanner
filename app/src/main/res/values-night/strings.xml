@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="description">App helps the user plan his weekly meals. In addition to having the ability to view categories, suggesting meals, and searching for a specific meal using many options</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="image_of_dishes">Image of Dishes</string>
+    <string name="signinTitle">Sign in using:</string>
+    <string name="email_address">E-mail address</string>
+    <string name="enter_password">Enter password</string>
+    <string name="remember_me">Remember me</string>
+    <string name="login">Login</string>
+    <string name="signupTitle">Sign up using</string>
+    <string name="full_name">Full Name</string>
+    <string name="create_account">Create Account</string>
+    <string name="create_password">Create password</string>
+    <string name="Guest">Continue as Guest</string>
+    <string name="home">Home</string>
+    <string name="favorite">Favorite</string>
+    <string name="search">Search</string>
+    <string name="plan">Plan</string>
+    <string name="account">Account</string>
+    <string name="daily_inspiration">Daily Inspiration</string>
+    <string name="categories">Categories</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="area">Area</string>
+    <string name="country">Country :</string>
+    <string name="instruction">Instruction</string>
+    <string name="my_favorite_meals">My Favorite Meals</string>
+    <string name="add_meal_to_your_plan">Add meal to your plan</string>
+
+    <string-array name="area">
+        <item>US</item>
+        <item>GB</item>
+        <item>CA</item>
+        <item>CN</item>
+        <item>HR</item>
+        <item>NL</item>
+        <item>EG</item>
+        <item>PH</item>
+        <item>FR</item>
+        <item>GR</item>
+        <item>IN</item>
+        <item>IE</item>
+        <item>IT</item>
+        <item>JM</item>
+        <item>JP</item>
+        <item>KE</item>
+        <item>MY</item>
+        <item>MX</item>
+        <item>MA</item>
+        <item>PL</item>
+        <item>PT</item>
+        <item>RU</item>
+        <item>ES</item>
+        <item>TH</item>
+        <item>TN</item>
+        <item>TR</item>
+        <item>FM</item>
+        <item>VN</item>
+    </string-array>
+</resources>
