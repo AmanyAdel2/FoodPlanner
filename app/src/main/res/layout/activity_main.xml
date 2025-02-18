@@ -9,15 +9,6 @@
     android:weightSum="4"
     tools:context=".Sign_LoginActivity.View.view.MainActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:layout_weight="0.85"
-        android:scaleType="fitXY"
-        android:src="@drawable/food_dishes"
-        android:contentDescription="@string/image_of_dishes" />
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
