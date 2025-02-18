@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init(){
-        imageView = findViewById(R.id.imageView);
+
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPage);
     }
