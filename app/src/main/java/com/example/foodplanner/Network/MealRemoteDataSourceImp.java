@@ -131,45 +131,15 @@ public class MealRemoteDataSourceImp implements  MealRemoteDataSource {
         if (c == 'c') {
             Observable<MealResponses> allMealsByCategory = services.getAllMealsByCategory(name);
             return allMealsByCategory.subscribeOn(Schedulers.io());
-            /*allMealsByCategory.enqueue(new Callback<MealResponses>() {
-                @Override
-                public void onResponse(Call<MealResponses> call, Response<MealResponses> response) {
-                    filterCallBack.onSuccessMealByFilter(response.body().meals);
-                }
 
-                @Override
-                public void onFailure(Call<MealResponses> call, Throwable t) {
-                    filterCallBack.onFailure(t.getMessage());
-                }
-            });*/
         }else if (c == 'i') {
             Observable<MealResponses> allMealsByIngredient = services.getAllMealsByIngredient(name);
             return allMealsByIngredient.subscribeOn(Schedulers.io());
-            /*allMealsByIngredient.enqueue(new Callback<MealResponses>() {
-                @Override
-                public void onResponse(Call<MealResponses> call, Response<MealResponses> response) {
-                    filterCallBack.onSuccessMealByFilter(response.body().meals);
-                }
 
-                @Override
-                public void onFailure(Call<MealResponses> call, Throwable t) {
-                    filterCallBack.onFailure(t.getMessage());
-                }
-            });*/
         }else if (c == 'a') {
             Observable<MealResponses> allMealsByArea = services.getAllMealsByArea(name);
             return allMealsByArea.subscribeOn(Schedulers.io());
-            /*allMealsByArea.enqueue(new Callback<MealResponses>() {
-                @Override
-                public void onResponse(Call<MealResponses> call, Response<MealResponses> response) {
-                    filterCallBack.onSuccessMealByFilter(response.body().meals);
-                }
 
-                @Override
-                public void onFailure(Call<MealResponses> call, Throwable t) {
-                    filterCallBack.onFailure(t.getMessage());
-                }
-            });*/
         }
         return null;
     }
@@ -178,16 +148,6 @@ public class MealRemoteDataSourceImp implements  MealRemoteDataSource {
     public Observable<MealResponses> makeNetworkCall( String id) {
         Observable<MealResponses> getMeal= services.getMealById(id);
         return  getMeal.subscribeOn(Schedulers.io());
-        /*getMeal.enqueue(new Callback<MealResponses>() {
-            @Override
-            public void onResponse(Call<MealResponses> call, Response<MealResponses> response) {
-                mealByIdCallBack.onSuccessMealById(response.body().meals);
-            }
-            @Override
-            public void onFailure(Call<MealResponses> call, Throwable t) {
-                mealByIdCallBack.onFailure(t.getMessage());
-                Log.i("TAG", "OnFailure: "+t.getMessage());
-            }
-        });*/
+
     }
 }
