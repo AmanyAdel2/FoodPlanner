@@ -84,19 +84,22 @@ public class AccountFragment extends Fragment implements AccountView {
         getUserDetails(email);
 
 
+
+
+
         // Logout Button
         button.setOnClickListener(v -> {
             // Ensure this method retrieves the current user's email
-           // if (!email.equals("guest")) {
-                // Clear user session
-             //   clearUserSession();
+            // if (!email.equals("guest")) {
+            // Clear user session
+            //   clearUserSession();
 
-                // Navigate to LogInFragment using NavController
-               // NavController navController = Navigation.findNavController(requireView());
-                //navController.navigate(R.id.logInFragment2);
+            // Navigate to LogInFragment using NavController
+            // NavController navController = Navigation.findNavController(requireView());
+            //navController.navigate(R.id.logInFragment2);
 
-                // Optional: Clear back stack to prevent navigating back to AccountFragment
-                //navController.popBackStack(R.id.logInFragment2, false);
+            // Optional: Clear back stack to prevent navigating back to AccountFragment
+            //navController.popBackStack(R.id.logInFragment2, false);
             //} else {
             //    Toast.makeText(getContext(), "No user is currently logged in.", Toast.LENGTH_SHORT).show();
             //}
@@ -110,15 +113,20 @@ public class AccountFragment extends Fragment implements AccountView {
         // Backup Button
         backUpbtn.setOnClickListener(v -> {
             SharedPreferences sharedPreferences = getContext().getSharedPreferences(PREFERENCE_FILE, Context.MODE_PRIVATE);
-            String email1 = sharedPreferences.getString("email", "guest");
+            String emailL = sharedPreferences.getString("email", "guest");
 
-            if (email != null && !email.equals("guest")) {
+            if (!emailL.equals("guest")) {
+                // Show progress feedback
+                Toast.makeText(getContext(), "Fetching meals for backup...", Toast.LENGTH_SHORT).show();
+
+                // Fetch favorite meals (backup will be triggered after meals are retrieved)
                 presenter.getAllFavMeal();
-                Toast.makeText(getContext(), "Backup started...", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getContext(), "Guest users cannot back up data.", Toast.LENGTH_SHORT).show();
             }
         });
+
+
 
 
 
@@ -131,12 +139,34 @@ public class AccountFragment extends Fragment implements AccountView {
         }
     }
 
+    private void backupMealsToFirebase(String email) {
+        if (meal.getMeals() == null || meal.getMeals().isEmpty()) {
+            Toast.makeText(getContext(), "No meals to backup!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        DatabaseReference userBackupRef = database.getReference("backups").child(sanitizeEmail(email));
+
+        userBackupRef.setValue(meal)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(getContext(), "Backup successful!", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Backup failed!", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+
     @Override
     public void getAllMeal(List<Meal> meals) {
         String email = getStoredEmail();
         meal.setEmail(email);
         meal.setMeals(new ArrayList<>(meals));
+
+        // Now, trigger backup since meals are retrieved
+        backupMealsToFirebase(email);
     }
+
 
     @Override
     public void deleteTable() {
@@ -147,9 +177,7 @@ public class AccountFragment extends Fragment implements AccountView {
         button = view.findViewById(R.id.logoutBtn);
         backUpbtn = view.findViewById(R.id.backUpBtn);
         database = FirebaseDatabase.getInstance();
-        username = view.findViewById(R.id.username);
-        emailField = view.findViewById(R.id.useremail);
-        userProfile = view.findViewById(R.id.profile_image);
+
         layout = view.findViewById(R.id.accountview);
     }
 
@@ -211,5 +239,4 @@ public class AccountFragment extends Fragment implements AccountView {
         if (databaseReference != null && userListener != null) {
             databaseReference.removeEventListener(userListener);
         }
-    }
-}
+    }}
