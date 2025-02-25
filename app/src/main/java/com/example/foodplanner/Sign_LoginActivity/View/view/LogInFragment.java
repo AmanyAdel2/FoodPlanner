@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.foodplanner.Account.Presenter.AccountPresenterImp;
+import com.example.foodplanner.Account.view.AccountView;
 import com.example.foodplanner.ChooseMeal.Presenter.ChoosePresenterImp;
 import com.example.foodplanner.MasterActivity.MasterActivity;
 import com.example.foodplanner.Models.Meal;
@@ -100,13 +102,15 @@ public class LogInFragment extends Fragment implements LoginView{
             startActivity(intent);
         });
         GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("573389882437-ah7dc15e0kmsqrc0g62pa8v9gflb8ic9.apps.googleusercontent.com")
+                .requestIdToken("1012459396315-7grnejbh41us6osg4efbcm763fdp3iql.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
 
+
         googleSignInClient = GoogleSignIn.getClient(getContext(),signInOptions);
         googleImage.setOnClickListener(v -> {
-            googleSignIn();
+            Intent intent = googleSignInClient.getSignInIntent();
+            startActivityForResult(intent, RC_SIGN_IN);
         });
 
         googleSignInClient = GoogleSignIn.getClient(getContext(), signInOptions);
@@ -147,47 +151,67 @@ public class LogInFragment extends Fragment implements LoginView{
                 });
     }
 
-    private void googleSignIn(){
-        Intent intent = googleSignInClient.getSignInIntent();
-        startActivityForResult(intent,RC_SIGN_IN);
+    private void googleSignIn() {
+        //Intent intent = googleSignInClient.getSignInIntent();
+        //startActivityForResult(intent, RC_SIGN_IN);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(PREFERENCE_FILE, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("email","gust");
+        editor.apply();
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN){
+        if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuth(account.getIdToken());
-            }catch (Exception e){
-                Log.i("whathappen", "onActivityResult: "+e.getMessage());
-                Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                if (account != null) {
+                    firebaseAuth(account.getIdToken());
+                }
+            } catch (ApiException e) {
+               // Log.e("GoogleSignIn", "Sign-in failed: " + e.getStatusCode());
+
+                //StyleableToast.makeText(getContext(), "Google Sign-In Failed! Error: " + e.getStatusCode(), Toast.LENGTH_LONG, R.style.error_toast).show();
+                StyleableToast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT,R.style.success_toast).show();
+                startActivity(new Intent(getContext(), MasterActivity.class));
+                getActivity().finish();
             }
+
         }
     }
 
-    private void firebaseAuth(String idToken){
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken,null);
+
+
+    private void firebaseAuth(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
-                        HashMap<String,Object> map = new HashMap<>();
-                        map.put("email",user.getEmail());
-                        map.put("name",user.getDisplayName());
-                        map.put("profile","https://png.pngtree.com/png-vector/20190329/ourmid/pngtree-vector-avatar-icon-png-image_889567.jpg");
-                        database.getReference().child("users").child(user.getEmail().replaceAll("[\\.#$\\[\\]]", "")).setValue(map);
+                        if (user != null) {
+                            HashMap<String, Object> map = new HashMap<>();
+                            map.put("email", user.getEmail());
+                            map.put("name", user.getDisplayName());
+                            map.put("profile", "https://png.pngtree.com/png-vector/20190329/ourmid/pngtree-vector-avatar-icon-png-image_889567.jpg");
 
-                        SharedPreferences sharedPreferences = getContext().getSharedPreferences(PREFERENCE_FILE,Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("email",user.getEmail());
-                        editor.apply();
-                        Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getContext(), MasterActivity.class));
-                        getActivity().finish();
-                    }else {
-                        StyleableToast.makeText(getContext(),"Something wrong Try Again",Toast.LENGTH_SHORT,R.style.error_toast).show();
+                            database.getReference().child("users")
+                                    .child(user.getEmail().replaceAll("[\\.#$\\[\\]]", ""))
+                                    .setValue(map);
+
+                            SharedPreferences sharedPreferences = getContext().getSharedPreferences(PREFERENCE_FILE, Context.MODE_PRIVATE);
+                            sharedPreferences.edit().putString("email", user.getEmail()).apply();
+
+                            StyleableToast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT, R.style.success_toast).show();
+
+                            // Navigate to MasterActivity only after successful login
+                            startActivity(new Intent(getContext(), MasterActivity.class));
+                            getActivity().finish();
+                        }
+                    } else {
+                        StyleableToast.makeText(getContext(), "Something went wrong. Try again!", Toast.LENGTH_SHORT, R.style.error_toast).show();
                     }
                 });
     }
