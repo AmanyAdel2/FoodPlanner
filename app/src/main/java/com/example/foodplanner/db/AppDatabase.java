@@ -10,14 +10,17 @@ import com.example.foodplanner.Models.Meal;
 
 @Database(entities = {Meal.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
-    private static AppDatabase appDatabase = null;
+    private static volatile AppDatabase INSTANCE;
 
     public abstract MealDAO getFavMealDAO();
 
-    public synchronized static AppDatabase getInstance(Context context) {
-        if (appDatabase == null) {
-            appDatabase = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "FavoriteMeals").build();
+    public static synchronized AppDatabase getInstance(Context context) {
+        if (INSTANCE == null) {
+            INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                            AppDatabase.class, "FavoriteMeals")
+                    .fallbackToDestructiveMigration() // Prevent crashes on version change
+                    .build();
         }
-        return appDatabase;
+        return INSTANCE;
     }
 }
