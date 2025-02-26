@@ -37,19 +37,19 @@ public class SearchPresenterImp implements SearchPresenter, NetworkCallBack {
         getCategories.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(categoryResponse -> {
                     view.showCategories(categoryResponse.categories);
-                }, throwable -> throwable.printStackTrace()// Handle error properly
+                }, throwable -> throwable.printStackTrace()
                 );
 
         getIngredient.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(ingredientResponse -> {
                     view.showIngredient(ingredientResponse.meals);
-                 // Handle error properly
+
                 });
 
         getCountries.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(countryResponse -> {
                     view.showCountries(countryResponse.meals);
-                }, throwable -> throwable.printStackTrace()// Handle error properly
+                }, throwable -> throwable.printStackTrace()
                 );
 
 
