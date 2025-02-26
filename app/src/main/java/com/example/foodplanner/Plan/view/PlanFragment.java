@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.foodplanner.ChooseMeal.Presenter.ChoosePresenterImp;
+
 import com.example.foodplanner.ChooseMeal.view.ChooseActivity;
 import com.example.foodplanner.Favorite.view.OnItemClickListener;
 import com.example.foodplanner.MealActivity.view.MealActivity;

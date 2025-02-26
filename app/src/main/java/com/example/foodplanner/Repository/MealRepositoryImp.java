@@ -7,8 +7,6 @@ import com.example.foodplanner.Models.CountryResponse;
 import com.example.foodplanner.Models.IngredientResponse;
 import com.example.foodplanner.Models.Meal;
 import com.example.foodplanner.Models.MealResponses;
-import com.example.foodplanner.Network.FilterCallBack;
-import com.example.foodplanner.Network.MealByIdCallBack;
 import com.example.foodplanner.Network.MealRemoteDataSource;
 import com.example.foodplanner.Network.NetworkCallBack;
 import com.example.foodplanner.db.MealLocalDataSource;

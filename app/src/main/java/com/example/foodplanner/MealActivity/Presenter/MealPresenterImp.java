@@ -4,18 +4,14 @@ import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.example.foodplanner.MealActivity.view.MealView;
-import com.example.foodplanner.MealListActivity.view.MealListView;
 import com.example.foodplanner.Models.Meal;
 import com.example.foodplanner.Models.MealResponses;
-import com.example.foodplanner.Network.MealByIdCallBack;
 import com.example.foodplanner.Repository.MealRepositoryImp;
-
-import java.util.ArrayList;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 
-public class MealPresenterImp implements MealPresenter, MealByIdCallBack {
+public class MealPresenterImp implements MealPresenter {
     private MealView view;
     private MealRepositoryImp repositoryImp;
 
@@ -37,13 +33,5 @@ public class MealPresenterImp implements MealPresenter, MealByIdCallBack {
         repositoryImp.insert(meal);
     }
 
-    @Override
-    public void onSuccessMealById(ArrayList<Meal> meals) {
-        view.showMeals(meals);
-    }
 
-    @Override
-    public void onFailure(String error) {
-        view.showErrMsg(error);
-    }
 }

@@ -1,4 +1,4 @@
-package com.example.foodplanner.Sign_LoginActivity.View.Adapter;
+package com.example.foodplanner.Sign_LoginActivity.View.view;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

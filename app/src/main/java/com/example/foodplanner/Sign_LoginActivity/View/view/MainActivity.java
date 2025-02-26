@@ -7,7 +7,6 @@ import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 import android.widget.ImageView;
 
-import com.example.foodplanner.Sign_LoginActivity.View.Adapter.FragmentsAdapter;
 import com.example.foodplanner.R;
 import com.google.android.material.tabs.TabLayout;
 
